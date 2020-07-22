@@ -19,7 +19,10 @@ ENDIF()
 # Create library from Gras source files
 ###############################################################################
 SET(SRC src/AStar.cpp src/SearchAlgorithm.cpp src/SearchNode.cpp)
+
+IF (UNIX)
 SET_PROPERTY(SOURCE ${SRC} PROPERTY COMPILE_FLAGS "-O2")
+ENDIF()
 
 ADD_LIBRARY(Gras SHARED ${SRC})
 TARGET_INCLUDE_DIRECTORIES(Gras PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)

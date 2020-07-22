@@ -11,7 +11,7 @@ Here is what makes Gras unique:
 - Operates on implicit graphs that are unknown at the start of the search, 
   and are expanded step-by-step throughout the search process
 - Arbitrary dimensions: From grid worlds to whatever dimension you need
-- Intuitive and easy to use: Problem-specifics are hadnled in a single class, 
+- Intuitive and easy to use: Problem-specifics are handled in a single class, 
   independent of any search-related code
 - Pretty fast
 - Compiles for standards < C++11
