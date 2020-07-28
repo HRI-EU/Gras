@@ -36,12 +36,11 @@ category="Libraries"
 
 sqLevel = "basic"
 
-sqOptOutRules    = [ 'GEN04' , 'C12' ]
+sqOptOutRules    = [ 'GEN04' ]
 
-sqComments       = { 'GEN04': 'Copyright header with BSD license not recognized by quality checker' ,
-                      'C12' : 'Seems to be broken, see Jira for ticket' }
+sqComments       = { 'GEN04': 'Copyright header with BSD license not recognized by quality checker' }
 
-sqCheckExe = [ 'build/bionic64/bin/bionic64/ExampleGrid -valgrind']
+sqCheckExe = [ 'build/bionic64/ExampleConsole']
 
 
 
