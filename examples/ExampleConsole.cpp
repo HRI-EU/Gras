@@ -191,5 +191,5 @@ int main(int argc, char** argv)
     std::cout << "No solution found" << std::endl;
   }
 
-  return algo.getOpenList().size();
+  return (int) algo.getOpenList().size();
 }
