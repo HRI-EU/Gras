@@ -62,8 +62,8 @@ class SearchNode
   /*! \brief operator << displays the values of the SearchNode in the following
    *          way: ("first discrete value", "second discrete value", ...)
    *
-   * \param os
-   * \param state the state to display
+   * \param os    Stream to print to
+   * \param state The state to display
    * \return ("first discrete value", "second discrete value", ...)
    */
   friend std::ostream& operator<< (std::ostream& os, const SearchNode& state);
@@ -79,7 +79,7 @@ public:
   /*! \brief SearchNode constructor based only on the discrete values passed as
    *         std vector.
    *
-   * \param value the state values
+   * \param[in] value_ the state values
    */
   SearchNode(std::vector<int> value_) :
     value(value_),
@@ -90,13 +90,9 @@ public:
 
   /*! \brief SearchNode constructor
    *
-   * \param value the discrete state values
-   * \param gCost cost of the path from the start state to this state
-   * \param hCost estimated cost from this state to the goal state. The
-   *              estimation is based on
-   * a heuristic function
-   * \param p_parent optional pointer to the predecessor state. The default is
-   *                 the null pointer.
+   * \param value_      The discrete state values
+   * \param gCost_      Cost of the path from the start state to this state
+   * \param parentState Parent state.
    * This should be the case of the start state
    */
   SearchNode(std::vector<int> value_, double gCost_,

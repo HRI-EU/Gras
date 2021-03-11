@@ -80,7 +80,7 @@ public:
   /*! \brief Insert adds a new state to the open list and places it at the
    *         its position in the sorted queue. If a state with the same key
    *         already exists, the state will not be inserted.
-   *  \param[in] state State to add to the open list
+   *  \param[in] stateToInsert State to add to the open list
    *  \return False if a state with the same key already exists, true otherwise.
    */
   inline bool insert(const SearchNode& stateToInsert)
@@ -134,7 +134,7 @@ public:
     // new cost is lower than previous cost, remove and reinsert with new
     // cost and parent
     std::pair<std::multiset<SearchNode, SearchNode>::iterator,
-      std::multiset<SearchNode, SearchNode>::iterator> ret;
+        std::multiset<SearchNode, SearchNode>::iterator> ret;
     ret = searchQueue.equal_range(existing);
     std::multiset<SearchNode, SearchNode>::iterator it2;
     it2 = std::find(ret.first, ret.second, existing);
@@ -198,7 +198,7 @@ public:
 
   /*! \brief Retrieves the SearchNode with the given key, and removes it from
    *         the list (if it was found).
-   *  \param[in] Key vector of integers.
+   *  \param[in] key vector of integers.
    */
   void remove(std::vector<int> key)
   {
@@ -213,7 +213,7 @@ public:
 
     SearchNode existing = map_it->second;
     std::pair<std::multiset<SearchNode, SearchNode>::iterator,
-      std::multiset<SearchNode, SearchNode>::iterator> ret;
+        std::multiset<SearchNode, SearchNode>::iterator> ret;
     ret = searchQueue.equal_range(existing);
 
     if ((ret.first != searchQueue.end()) && (ret.first != ret.second))
@@ -243,7 +243,7 @@ public:
   }
 
   /*! \brief operator [] returns the search state that has the position
-   *         \ref index in the open list. The list is sorted by increasing
+   *         index in the open list. The list is sorted by increasing
    *         f cost.
    *
    *  \param index rank in the queue

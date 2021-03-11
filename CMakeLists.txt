@@ -2,14 +2,13 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 SET(BST_INSTALL_CATEGORY Libraries) 
 
 PROJECT(Gras)
+LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 ################################################################################
 # Check if project is stand-alone or inside tree with dependencies
 ################################################################################
 SET(STANDALONE_PROJECT OFF)
 IF(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-  PROJECT(Gras)
-  LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
   MESSAGE(STATUS "Compiling Gras as stand-alone project")
   SET(STANDALONE_PROJECT ON)
   SET(LIBRARY_LINKING_TYPE "SHARED")
@@ -79,6 +78,7 @@ TARGET_LINK_LIBRARIES(ExampleConsole Gras)
 
 # Install the libraries
 INSTALL(TARGETS Gras EXPORT GrasExport DESTINATION lib/$ENV{MAKEFILE_PLATFORM})
+INSTALL(TARGETS ExampleConsole RUNTIME DESTINATION bin/$ENV{MAKEFILE_PLATFORM} LIBRARY DESTINATION lib/$ENV{MAKEFILE_PLATFORM})
 
 # Install the headers
 INSTALL(
@@ -103,6 +103,7 @@ IF (Qt5_FOUND)
   IF (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     TARGET_COMPILE_OPTIONS(ExampleGrid PRIVATE "-std=c++11")
   ENDIF()
+  INSTALL(TARGETS ExampleGrid RUNTIME DESTINATION bin/$ENV{MAKEFILE_PLATFORM} LIBRARY DESTINATION lib/$ENV{MAKEFILE_PLATFORM})
   
 ENDIF(Qt5_FOUND)
 
@@ -115,6 +116,7 @@ IF (OpenSceneGraph_FOUND)
   ADD_EXECUTABLE(ExampleMonkey examples/ExampleMonkey.cpp)
   TARGET_INCLUDE_DIRECTORIES(ExampleMonkey PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/examples ${OPENSCENEGRAPH_INCLUDE_DIRS})
   TARGET_LINK_LIBRARIES(ExampleMonkey Gras ${OPENSCENEGRAPH_LIBRARIES})
+  INSTALL(TARGETS ExampleMonkey RUNTIME DESTINATION bin/$ENV{MAKEFILE_PLATFORM} LIBRARY DESTINATION lib/$ENV{MAKEFILE_PLATFORM})
 ENDIF(OpenSceneGraph_FOUND)
 
 ###############################################################################

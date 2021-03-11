@@ -60,11 +60,11 @@ public:
    *
    *  \param[in] explorer   Exploration strategy class
    *  \param[in] start      State vector comprising starting state
-   *  \param[in] epsilon    Dynamic cost scaling weight
+   *  \param[in] algo       Search algorithm type
    *  \return Solution path from start state to goal. States are stored in the
    *          rows of the solution path.
    */
-  std::vector<std::vector<int> > search(const ExplorationStrategy& expl,
+  std::vector<std::vector<int> > search(const ExplorationStrategy& explorer,
                                         std::vector<int> start,
                                         Algo algo=AStar);
 

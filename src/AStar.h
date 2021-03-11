@@ -47,13 +47,13 @@ public:
   /*! \ingroup Gras
    *  \brief A* search algorithm to find the optimal path in a graph.
    *
-   *  \param[in] explorer   Exploration strategy class
+   *  \param[in] expl       Exploration strategy class
    *  \param[in] start      State vector comprising starting state
    *  \return Solution path from start state to goal. States are stored in the
    *          rows of the solution path.
    */
   static std::vector<std::vector<int> > search(const ExplorationStrategy& expl,
-                                              std::vector<int> start);
+                                               std::vector<int> start);
 
 
   static void printSolution(const ExplorationStrategy& explorer,

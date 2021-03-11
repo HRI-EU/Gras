@@ -80,7 +80,7 @@ public:
   /*! \brief Insert adds a new state to the open list and places it at the
    *         its position in the sorted queue. If a state with the same key
    *         already exists, the state will not be inserted.
-   *  \param[in] state State to add to the open list
+   *  \param[in] stateToInsert State to add to the open list
    *  \return False if a state with the same key already exists, true otherwise.
    */
   inline bool insert(const SearchNode& stateToInsert)
@@ -128,10 +128,10 @@ public:
 
 
 
-  /*! \brief operator [] returns the search state that has the position \ref index
+  /*! \brief operator [] returns the search state that has the position index
    *         in the open list. The list is sorted by increasing f cost.
    *
-   *  \param index rank in the queue
+   *  \param[in] index rank in the queue
    *  \return search state with the rank index
    */
   inline SearchNode operator[](const size_t& index) const
