@@ -31,7 +31,7 @@
 
 function testSearch()
 {
-    build/bionic64/bin/bionic64/ExampleConsole
+    build/$MAKEFILE_PLATFORM/ExampleConsole
     testResult=$?
 }
 

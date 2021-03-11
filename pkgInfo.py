@@ -34,11 +34,9 @@ version="1.0"
 
 category="Libraries"
 
-sqLevel = "basic"
+sqLevel = "advanced"
 
-sqOptOutRules    = [ 'GEN04' ]
-
-sqComments       = { 'GEN04': 'Copyright header with BSD license not recognized by quality checker' }
+copyright        = 'Copyright (c) 2020, Honda Research Institute Europe GmbH'
 
 sqCheckExe = [ 'build/bionic64/ExampleConsole']
 

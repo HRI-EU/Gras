@@ -3,6 +3,53 @@ SET(BST_INSTALL_CATEGORY Libraries)
 
 PROJECT(Gras)
 
+################################################################################
+# Check if project is stand-alone or inside tree with dependencies
+################################################################################
+SET(STANDALONE_PROJECT OFF)
+IF(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+  PROJECT(Gras)
+  LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+  MESSAGE(STATUS "Compiling Gras as stand-alone project")
+  SET(STANDALONE_PROJECT ON)
+  SET(LIBRARY_LINKING_TYPE "SHARED")
+  FIND_PACKAGE(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+  IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    SET(CMAKE_INSTALL_PREFIX "$ENV{SIT}/Libraries/Gras/1.0" CACHE PATH "Default sand box directory" FORCE)
+  ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+ELSE()
+  MESSAGE(STATUS "Compiling ${PROJECT_NAME} as in-tree project")
+ENDIF()
+
+################################################################################
+# Setup exported target collection
+################################################################################
+SET(GRAS_EXPORT_LIBRARIES "" CACHE INTERNAL "")
+# Create a macro for adding an export library
+FUNCTION(GRAS_ADD_EXPORT_LIBRARY library)
+  SET(GRAS_EXPORT_LIBRARIES ${GRAS_EXPORT_LIBRARIES} ${library} CACHE INTERNAL "")
+ENDFUNCTION()
+
+################################################################################
+# Add the automatically determined parts of the RPATH which point to directories
+# outside the build tree to the install RPATH. 
+# Note: This only works with CMake >= 3.0. With 2.8, the library directories of
+# the dependencies must be added to the LD_LIBRARY_PATH manually in order to
+# use the installed executables. This has no effect on using the package in
+# another CMake project.
+################################################################################
+SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
+################################################################################
+# The RPATH to be used when installing, but only if it's not a system directory
+# See CMake wiki:
+# (https://gitlab.kitware.com/cmake/community/wikis/doc/cmake/RPATH-handling)
+################################################################################
+LIST(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/lib/$ENV{MAKEFILE_PLATFORM}" isSystemDir)
+IF("${isSystemDir}" STREQUAL "-1")
+  SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib/$ENV{MAKEFILE_PLATFORM}")
+ENDIF("${isSystemDir}" STREQUAL "-1")
+
 ###############################################################################
 # Create library from Gras source files
 ###############################################################################
@@ -13,7 +60,15 @@ IF (UNIX)
 ENDIF()
 
 ADD_LIBRARY(Gras SHARED ${SRC})
-TARGET_INCLUDE_DIRECTORIES(Gras PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+#TARGET_INCLUDE_DIRECTORIES(Gras PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+TARGET_INCLUDE_DIRECTORIES(Gras PUBLIC
+    # Header source location
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    
+    # Header install location
+    $<INSTALL_INTERFACE:include>)
 
 ###############################################################################
 # Create 2d grid search example with native console (no dependencies)
@@ -21,6 +76,19 @@ TARGET_INCLUDE_DIRECTORIES(Gras PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 ADD_EXECUTABLE(ExampleConsole examples/ExampleConsole.cpp)
 TARGET_INCLUDE_DIRECTORIES(ExampleConsole PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/examples)
 TARGET_LINK_LIBRARIES(ExampleConsole Gras)
+
+# Install the libraries
+INSTALL(TARGETS Gras EXPORT GrasExport DESTINATION lib/$ENV{MAKEFILE_PLATFORM})
+
+# Install the headers
+INSTALL(
+  DIRECTORY src/ 
+  DESTINATION include
+  FILES_MATCHING PATTERN "*.h"
+)
+
+# Mark for export
+GRAS_ADD_EXPORT_LIBRARY(Gras)
 
 ###############################################################################
 # Create 2d grid search example with Qt Gui
@@ -59,3 +127,5 @@ IF (WIN32)
       ${LIBRARY_OUTPUT_PATH}/${CMAKE_BUILD_TYPE}/Gras.dll
       ${EXECUTABLE_OUTPUT_PATH}/${CMAKE_BUILD_TYPE}/Gras.dll)
 ENDIF()
+
+INCLUDE(ExportGras)
