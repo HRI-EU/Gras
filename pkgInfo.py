@@ -40,6 +40,10 @@ copyright        = 'Copyright (c) 2020, Honda Research Institute Europe GmbH'
 
 sqCheckExe = [ 'build/bionic64/ExampleConsole']
 
+gitOriginForCIA  = 'git@dmz-gitlab.honda-ri.de:GeneralRobotics/Gras.git'
+
+gitBranchForCIA = 'master'
+
 
 
 
