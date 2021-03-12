@@ -1,11 +1,13 @@
 # Gras
 
+Gras is a C++ library that implements the standard search algorithms A*, 
+Dijkstra and Greedy search.
+
 <p float="center">
   <img src="doc/images/gras.png" width="25%" >
 </p>
 
-Gras is a C++ library that implements the standard search algorithms A*, 
-Dijkstra and Greedy search. A lot of other libraries do this as well.
+A lot of other libraries do this as well.
 Here is what makes Gras unique:
 
 - Operates on implicit graphs that are unknown at the start of the search, 
