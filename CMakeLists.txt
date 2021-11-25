@@ -32,14 +32,14 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 SET(BST_INSTALL_CATEGORY Libraries) 
 
-PROJECT(Gras)
-LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 ################################################################################
 # Check if project is stand-alone or inside tree with dependencies
 ################################################################################
 SET(STANDALONE_PROJECT OFF)
 IF(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+  PROJECT(Gras)
+  LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
   MESSAGE(STATUS "Compiling Gras as stand-alone project")
   SET(STANDALONE_PROJECT ON)
   SET(LIBRARY_LINKING_TYPE "SHARED")
@@ -49,6 +49,7 @@ IF(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 ELSE()
   MESSAGE(STATUS "Compiling ${PROJECT_NAME} as in-tree project")
+  LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Gras/cmake)
 ENDIF()
 
 ################################################################################
