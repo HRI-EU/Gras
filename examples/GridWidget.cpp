@@ -219,8 +219,8 @@ void GridWidget::init()
 
     for (size_t col = 0; col < columns; ++col)
     {
-      GridLabel* label = new GridLabel(row, col);
-      grid->addWidget(label, row, col);
+      GridLabel* label = new GridLabel((int)row, (int)col);
+      grid->addWidget(label, (int)row, (int)col);
       labelMatRow.push_back(label);
     }
 
@@ -477,8 +477,8 @@ void GridWidget::plan()
   }
 
   char a[256];
-  sprintf(a, "Solution with cost %f has %zu steps",
-          gCostIntegral, solution.size());
+  snprintf(a, 256, "Solution with cost %f has %zu steps",
+           gCostIntegral, solution.size());
   msg->setText(a);
 
   // For A-Star and Dijkstra, the integrated cost must correspond to the one
