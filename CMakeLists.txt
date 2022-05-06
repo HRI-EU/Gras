@@ -42,18 +42,19 @@ IF(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
   MESSAGE(STATUS "Compiling Gras as stand-alone project")
   SET(STANDALONE_PROJECT ON)
-  SET(LIBRARY_LINKING_TYPE "SHARED")
   FIND_PACKAGE(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
   IF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     SET(CMAKE_INSTALL_PREFIX "$ENV{SIT}/Libraries/Gras/1.0" CACHE PATH "Default sand box directory" FORCE)
   ENDIF(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  INCLUDE(CompileSettings)
-  #SET(BUILD_SHARED_LIBS ON)
-  #SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 ELSE()
   MESSAGE(STATUS "Compiling ${PROJECT_NAME} as in-tree project")
   LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Gras/cmake)
 ENDIF()
+
+################################################################################
+# Otherwise no import library is built 
+################################################################################
+SET(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 ################################################################################
 # Setup exported target collection
@@ -94,8 +95,6 @@ IF (UNIX)
 ENDIF()
 
 ADD_LIBRARY(Gras SHARED ${SRC})
-
-#TARGET_INCLUDE_DIRECTORIES(Gras PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 TARGET_INCLUDE_DIRECTORIES(Gras PUBLIC
     # Header source location
